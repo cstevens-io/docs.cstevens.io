@@ -18,5 +18,5 @@ after_success:
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
   - docker push splooge/docs-cstevens-io
   - sleep 5
-  - kubectl rollout restart deployment docs-cstevens-io
-  - kubectl rollout status deployment docs-cstevens-io
+  - /usr/local/bin/kubectl rollout restart deployment docs-cstevens-io
+  - /usr/local/bin/kubectl rollout status deployment docs-cstevens-io
