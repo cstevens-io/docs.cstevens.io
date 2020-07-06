@@ -1,0 +1,6 @@
+FROM python:alpine
+
+RUN apk add make
+WORKDIR /docs
+COPY requirements.txt ./
+RUN pip3 install -r requirements.txt

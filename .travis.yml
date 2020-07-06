@@ -1,0 +1,22 @@
+language: python
+
+install:
+  - export RELEASE=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/${RELEASE}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
+  - mkdir ${HOME}/.kube
+  - echo "$KUBE_CONFIG" | base64 --decode > ${HOME}/.kube/config
+
+services:
+  - docker
+
+script:
+  - docker build -f Dockerfile.sphinx . -t sphinx
+  - docker run -v $PWD:/docs sphinx make html
+  - docker build -f Dockerfile.nginx . -t splooge/docs-cstevens-io
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+  - docker push splooge/docs-cstevens-io
+  - sleep 5
+  - kubectl rollout restart deployment docs-cstevens-io
+  - kubectl rollout status deployment docs-cstevens-io
