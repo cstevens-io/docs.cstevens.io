@@ -2,8 +2,9 @@ language: python
 
 install:
   - export RELEASE=$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-  - sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/${RELEASE}/bin/linux/amd64/kubectl -o /usr/local/bin/kubectl
-  - chmod -v +x /usr/local/bin/kubectl
+  - curl -LO https://storage.googleapis.com/kubernetes-release/release/${RELEASE}/bin/linux/amd64/kubectl
+  - chmod -v +x kubectl
+  - sudo mv kubectl /usr/local/bin
   - mkdir ${HOME}/.kube
   - echo "$KUBE_CONFIG" | base64 --decode > ${HOME}/.kube/config
 
