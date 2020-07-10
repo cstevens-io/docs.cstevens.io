@@ -336,3 +336,41 @@ You can scale out the nginx front-ends or the php-fpm servers by running:
    $ kubectl -n forums scale deploy php --replicas 5
 
 I wouldn't try to scale out the MySQL database, who knows what fun corruption you'll run into if you have 2+ instances of MySQL trying to write to the same files.
+
+And here's the end result of all the kubernetes objects we created along the way:
+
+.. code-block:: text
+
+   $ kubectl -n forums get pv,pvc,svc,deploy,rs,pod,ingressroute
+   NAME                                                        CAPACITY   ACCESS MODES   RECLAIM POLICY   STATUS   CLAIM              STORAGECLASS   REASON   AGE
+   persistentvolume/pvc-2be3815d-c1ee-4112-9a0e-514997d61dff   10Gi       RWO            Delete           Bound    forums/html-pvc    local-path              20h
+   persistentvolume/pvc-b2957d3c-80c3-4475-b1dc-e8253beb2042   5Gi        RWO            Delete           Bound    forums/mysql-pvc   local-path              20h
+   
+   NAME                              STATUS   VOLUME                                     CAPACITY   ACCESS MODES   STORAGECLASS   AGE
+   persistentvolumeclaim/html-pvc    Bound    pvc-2be3815d-c1ee-4112-9a0e-514997d61dff   10Gi       RWO            local-path     20h
+   persistentvolumeclaim/mysql-pvc   Bound    pvc-b2957d3c-80c3-4475-b1dc-e8253beb2042   5Gi        RWO            local-path     20h
+   
+   NAME            TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)    AGE
+   service/mysql   ClusterIP   10.43.229.202   <none>        3306/TCP   20h
+   service/php     ClusterIP   10.43.187.226   <none>        9000/TCP   14h
+   service/nginx   ClusterIP   10.43.135.35    <none>        80/TCP     14h
+   
+   NAME                    READY   UP-TO-DATE   AVAILABLE   AGE
+   deployment.apps/mysql   1/1     1            1           20h
+   deployment.apps/php     1/1     1            1           14h
+   deployment.apps/nginx   3/3     3            3           14h
+   
+   NAME                               DESIRED   CURRENT   READY   AGE
+   replicaset.apps/mysql-69c67b54dd   1         1         1       20h
+   replicaset.apps/php-7f5ff45fb8     1         1         1       14h
+   replicaset.apps/nginx-75c9f895bd   3         3         3       14h
+   
+   NAME                         READY   STATUS    RESTARTS   AGE
+   pod/mysql-69c67b54dd-sb56s   1/1     Running   0          20h
+   pod/php-7f5ff45fb8-xsfbv     1/1     Running   0          14h
+   pod/nginx-75c9f895bd-cnblf   1/1     Running   0          14h
+   pod/nginx-75c9f895bd-hskfh   1/1     Running   0          12h
+   pod/nginx-75c9f895bd-vdf6h   1/1     Running   0          12h
+   
+   NAME                                                AGE
+   ingressroute.traefik.containo.us/forums.pwned.com   12h
