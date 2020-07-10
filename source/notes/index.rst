@@ -9,3 +9,4 @@
    kube-pods
    kube-deployments
    publish-this-site
+   k3s-LEMP-stack

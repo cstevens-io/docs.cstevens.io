@@ -1,0 +1,4 @@
+docker run --rm -v $PWD:/docs sphinx make html
+docker build -f Dockerfile.nginx . -t splooge/nginx:latest
+rm -rf build/
+docker run --rm -p 80:80 splooge/nginx:latest
