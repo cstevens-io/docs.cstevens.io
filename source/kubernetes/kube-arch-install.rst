@@ -1,5 +1,5 @@
 Install Kubernetes on Arch
-==========================
+--------------------------
 
 .. Mostly stolen from `StephenSorriaux's gist <https://gist.github.com/StephenSorriaux/fa07afa57c931c84d1886b08c704acfe>`_
 
@@ -169,11 +169,11 @@ Install Kubernetes on Arch
 
 #. Deploy a pod network to the cluster
 
+   Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at https://kubernetes.io/docs/concepts/cluster-administration/addons/
+   eg:
+
    ::
 
-      Run "kubectl apply -f [podnetwork].yaml" with one of the options listed at:
-      https://kubernetes.io/docs/concepts/cluster-administration/addons/
-      eg:
       kubectl apply -f "https://cloud.weave.works/k8s/net?k8s-version=$(kubectl version | base64 | tr -d '\n')"
 
    |
