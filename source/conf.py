@@ -26,10 +26,6 @@ author = 'Chris Stevens'
 # -- Helper function for generating datever
 
 def get_date_version():
-    """ Generates a date-version
-
-        Output format is YYYY.MM.DD.24HR.MM
-    """
 
     dt = datetime.datetime.now()
     date_version = dt.strftime("%Y.%m.%d.%H.%M")
@@ -78,8 +74,8 @@ html_theme_options = {
 
 html_context = {
     'display_github': True,
-    'github_user': 'splooge',
-    'github_repo': 'splooge.github.io',
+    'github_user': 'cstevens-io',
+    'github_repo': 'docs.cstevens.io',
     'github_version': 'master/source/' ,
 }
 

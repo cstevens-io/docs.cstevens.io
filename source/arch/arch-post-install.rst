@@ -26,7 +26,6 @@ Some basic zsh settings
 -----------------------
 
 .. code-block:: text
-    :caption: $HOME/.zshrc
 
     HISTFILE=~/.histfile
     HISTSIZE=1000
