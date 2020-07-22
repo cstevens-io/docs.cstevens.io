@@ -84,15 +84,15 @@ Enable systemd-homed
 
 .. code-block:: text
 
-    # systemctl enable systemd-homed
-    # systemctl start systemd-homed
+    systemctl enable systemd-homed
+    systemctl start systemd-homed
 
 Add user(s) via systemd-homed
 -----------------------------
 
 .. code-block:: text
 
-    # homectl create <username> -G wheel --shell=/bin/zsh --storage=directory --uid=1001
+    homectl create <username> -G wheel --shell=/bin/zsh --storage=directory --uid=1001
 
 Update systemd-boot when there is a new version
 ===============================================
