@@ -1,7 +1,5 @@
 Install Kubernetes on Arch
---------------------------
-
-.. Mostly stolen from `StephenSorriaux's gist <https://gist.github.com/StephenSorriaux/fa07afa57c931c84d1886b08c704acfe>`_
+==========================
 
 .. note::
 
@@ -11,8 +9,6 @@ Install Kubernetes on Arch
    ::
 
       pacman -S conntrack-tools docker ebtables ethtool socat
-
-   |
 
 #. Disable swap space
    ::
@@ -39,7 +35,7 @@ Install Kubernetes on Arch
 #. Update the `ExecStart` line in the docker unit file
    ::
 
-      sed -i 's|^ExecStart.*|ExecStart=/usr/bin/dockerd --exec-opt native.cgroupdriver=systemd --iptables=false --ip-masq=false -H fd://|g' /usr/lib/systemd/system/docker.service
+      sed -i 's|^ExecStart.*|ExecStart=/usr/bin/dockerd --exec-opt --native.cgroupdriver=systemd --iptables=false --ip-masq=false -H fd://|g' /usr/lib/systemd/system/docker.service
 
    |
 
@@ -80,7 +76,7 @@ Install Kubernetes on Arch
 
    |
 
-#. Download the latest container runtime interface
+#. Download the latest container runtime interface utilities
 
    ::
 
@@ -124,7 +120,7 @@ Install Kubernetes on Arch
       # the .NodeRegistration.KubeletExtraArgs object in the configuration files instead. KUBELET_EXTRA_ARGS should be sourced from this file.
       EnvironmentFile=-/etc/default/kubelet
       ExecStart=
-      ExecStart=/usr/local/bin/kubelet $KUBELET_KUBECONFIG_ARGS $KUBELET_CONFIG_ARGS $KUBELET_KUBEADM_ARGS $KUBELET_EXTRA_ARGS
+      ExecStart=/usr/local/bin/kubelet \$KUBELET_KUBECONFIG_ARGS \$KUBELET_CONFIG_ARGS \$KUBELET_KUBEADM_ARGS \$KUBELET_EXTRA_ARGS
       EOF
       }
 
